@@ -12,8 +12,8 @@ namespace TP5_SIM
 {
     public partial class Form1 : Form
     {
-        private uint cantSimulaciones = 0;
-        private uint desde, hasta = 0;
+        private int cantSimulaciones = 0;
+        private int desde, hasta = 0;
         private GestorDatos gestorDatos = null;
         private GestorTabla gestorTabla = null;
         private GestorTabla gestorTablaResultado = null;
@@ -33,9 +33,9 @@ namespace TP5_SIM
 
             if (flag == true)
             {
-                //gestorDatos.CargarDatos(this.cantSimulaciones, (int)desde);
-                //gestorTabla = new GestorTabla(this.dataGridView1);
-                //gestorTablaResultado = new GestorTabla(this.dataGridView2);
+                gestorDatos.CargarDatos(cantSimulaciones, desde);
+                gestorTabla = new GestorTabla(dataGridView1);
+                gestorTablaResultado = new GestorTabla(dataGridView2);
                 ////gestorTabla.CompletarTabla(desde - 1, hasta - 1, gestorDatos.GetDatos());
                 //gestorTabla.CompletarTabla(gestorDatos.GetDatos());
                 //gestorTablaResultado.CompletarTabla(gestorDatos.GetResultado());
@@ -59,12 +59,12 @@ namespace TP5_SIM
 
         private void LeerTextBoxSimulaciones()
         {
-            this.cantSimulaciones = uint.Parse(this.txt_simulaciones.Text);
+            this.cantSimulaciones = int.Parse(this.txt_simulaciones.Text);
         }
 
         private void LeerTextBoxDesdeHasta()
         {
-            this.desde = uint.Parse(this.txt_desde.Text);
+            this.desde = int.Parse(this.txt_desde.Text);
         }
 
         private void txt_simulaciones_TextChanged(object sender, EventArgs e)
