@@ -8,6 +8,21 @@ namespace TP5_SIM
 {
     class GestorDatos
     {
+        private readonly double detenida = 0;
+        private readonly double funcionando = 1;
+
+        private readonly double eventoInicial = -1;
+        private readonly double llegadaFamilia = 1;
+        private readonly double finDeCompra = 2;
+        private readonly double finDeSubidaCalecita = 3;
+        private readonly double rompeEnLlanto = 4;
+
+        private readonly double estadoBoleteriaLibre = 0;
+        private readonly double estadoBoleteriaOcupado = 1;
+
+        private readonly double siTieneFicha = 1;
+        private readonly double noTieneFicha = 0;
+
         private double[,] matrizDatos;
         private Random random = new Random();
 
@@ -21,7 +36,7 @@ namespace TP5_SIM
             int hasta = 0;
             double[,] datos = new double[101, 26];
 
-            double Estado = 0;
+            double evento = 0;
             double reloj = 0.0;
             double rndTiempoLlegada = 0.0;
             double tiempoLlegada = 0.0;
@@ -35,13 +50,17 @@ namespace TP5_SIM
             double tiempoFinSubidaCal = 0.0;
             double RompeEnLlandoTiempo = 0.0;
             double ProxRompeEnLlanto = 0.0;
-            double EstadoCalecita = 0.0;
-            double ColaCalecita = 0.0;
+            double estadoCalecita = 0.0; 
+            double colaCalecita = 8;
             double ProxVueltaCalecita = 0.0;
-            double EstadoBoleteria = 0;
-            double ColaBoleteria = 0;
+            double estadoBoleteria = this.estadoBoleteriaLibre;
+            double colaBoleteria = 0;
+            double tiempoRompeEnLlanto = 0.0;
+            double taParaLlorar = -1;
+            double proximoRompeEnLlanto = -1;
             int cont = 0;
             int nroExp = 1;
+            double menorTiempoEvento = 0.0;
 
             for (int i = 0; i <= cantSimulaciones; i++)
             {
@@ -65,25 +84,92 @@ namespace TP5_SIM
                     proxLlegada = reloj + tiempoLlegada;
                     rndTieneFichas = GenerarRandom();
                     tieneFichas = TieneFichas(rndTieneFichas);
+                    rndCantNiños = GenerarRandom();
+                    cantNiños = CalcularCantNiños(1, 5, rndCantNiños);
+                    rndFinDeCompra = GenerarRandom();
+                    tiempoFinDeCompra = CalcularTiempoFinDeCompra(1, 2, rndFinDeCompra);
+                    tiempoFinSubidaCal = 0;
+                    tiempoRompeEnLlanto = (evento == finDeSubidaCalecita) ? reloj : tiempoRompeEnLlanto;
+                    taParaLlorar = (evento == tiempoFinSubidaCal) ? 
+                    estadoCalecita = (colaCalecita == 0 || evento == finDeSubidaCalecita || ) ? this.funcionando : this.detenida;
+                    colaCalecita = CalculoColaCalecita(colaCalecita, cantNiños, estadoCalecita);
+                    ProxVueltaCalecita = CalculoProxVueltaCalecita(evento, reloj, ProxVueltaCalecita);
+                    estadoBoleteria = CalculoEstadoBoleteria(evento, tieneFichas, estadoBoleteria);
+                    colaBoleteria = AgregarFamiliaColaBoleteria(evento, estadoBoleteria, colaBoleteria);
+
                 }
             }
 
             this.matrizDatos = datos;
         }
+       
 
-        private int TieneFichas(double rnd)
+        private double AgregarFamiliaColaBoleteria(double eventoActual, double estadoBoleteriaActual, double colaBoleteria)
         {
-            return (rnd < 0.3) ? 1 : 0;
+            if (estadoBoleteriaActual == estadoBoleteriaOcupado && eventoActual == llegadaFamilia)
+            {
+                return colaBoleteria + 1;
+            }
+            return colaBoleteria;
         }
 
-        public int CalcularEvento()
+        private double CalculoEstadoBoleteria(double evento, double tieneFicha, double estadoBoleteriaActual)
         {
-            if ()
+            if (evento == this.llegadaFamilia && tieneFicha == siTieneFicha)
+            {
+                if (estadoBoleteriaActual == estadoBoleteriaLibre) return estadoBoleteriaOcupado;
+            }
+            return estadoBoleteriaOcupado;
+        }
+
+        private double CalculoProxVueltaCalecita(double evento, double reloj, double proximaVuelta)
+        {
+            double auxiliar = 0.0;
+
+            if (evento == this.finDeSubidaCalecita)
+            {
+                auxiliar = reloj + 4.0;
+            }
+
+            if (evento == rompeEnLlanto)
+            {
+                auxiliar = proximaVuelta + 0.3;
+            }
+            return auxiliar;
+        }
+
+        private double CalculoColaCalecita(double colaCalecitaActual, double cantNiños, double estadoCalecita)
+        {
+            if (estadoCalecita == this.detenida)
+            {
+                return colaCalecitaActual + cantNiños;
+            }
+            return colaCalecitaActual;
+        }
+
+        private double CalcularTiempoFinDeCompra(int a, int b, double rnd)
+        {
+            return a + (rnd * (b - a));
+        }
+
+        private double CalcularCantNiños(int a, int b, double rnd)
+        {
+            return Math.Truncate(a + (rnd * (b - a)));
+        }
+
+        private double TieneFichas(double rnd)
+        {
+            return (rnd < 0.3) ? siTieneFicha : noTieneFicha;
         }
 
         private double GenerarRandom()
         {
             return Math.Truncate((double)(random.Next() * 10000) / 10000);
+        }
+
+        private double TiempoLlegadaFamilia()
+        {
+            return Math.Truncate((double)((-3 * Math.Log(1 - GenerarRandom())) * 10000) / 10000);
         }
 
         private double CalcularTiempoLlegada(double a, double b, double rnd)
