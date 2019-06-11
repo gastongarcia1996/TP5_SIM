@@ -21,5 +21,25 @@ namespace TP5_SIM
             this.tiempoSubida = tiempoSubida;
         }
 
+        public void setEstado(double estado)
+        {
+            this.estado = estado;
+        }
+        public void setRnd(double rnd)
+        {
+            this.rnd = rnd;
+        }
+        public void setTiempoSubida(double tiempoSubida)
+        {
+            this.tiempoSubida = tiempoSubida;
+        }
+        public double GetEstado()
+        {
+            return estado;
+        }
+        public double GetTiempoSubida()
+        {
+            return tiempoSubida;
+        }
     }
 }
