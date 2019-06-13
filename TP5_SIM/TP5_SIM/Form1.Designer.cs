@@ -28,12 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txt_desde = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.txt_simulaciones = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txt_desde = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -82,12 +81,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
-            // txt_desde
+            // txt_simulaciones
             // 
-            this.txt_desde.Location = new System.Drawing.Point(138, 23);
-            this.txt_desde.Name = "txt_desde";
-            this.txt_desde.Size = new System.Drawing.Size(100, 20);
-            this.txt_desde.TabIndex = 6;
+            this.txt_simulaciones.Location = new System.Drawing.Point(138, 23);
+            this.txt_simulaciones.Name = "txt_simulaciones";
+            this.txt_simulaciones.Size = new System.Drawing.Size(100, 20);
+            this.txt_simulaciones.TabIndex = 1;
+            this.txt_simulaciones.TextChanged += new System.EventHandler(this.txt_simulaciones_TextChanged_1);
             // 
             // label2
             // 
@@ -98,13 +98,6 @@
             this.label2.Size = new System.Drawing.Size(120, 20);
             this.label2.TabIndex = 8;
             this.label2.Text = "Simulaciones:";
-            // 
-            // txt_simulaciones
-            // 
-            this.txt_simulaciones.Location = new System.Drawing.Point(33, -60);
-            this.txt_simulaciones.Name = "txt_simulaciones";
-            this.txt_simulaciones.Size = new System.Drawing.Size(100, 20);
-            this.txt_simulaciones.TabIndex = 5;
             // 
             // label1
             // 
@@ -124,6 +117,7 @@
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -158,12 +152,13 @@
             this.dataGridView1.Size = new System.Drawing.Size(1163, 377);
             this.dataGridView1.TabIndex = 9;
             // 
-            // textBox1
+            // txt_desde
             // 
-            this.textBox1.Location = new System.Drawing.Point(138, 89);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 11;
+            this.txt_desde.Location = new System.Drawing.Point(138, 89);
+            this.txt_desde.Name = "txt_desde";
+            this.txt_desde.Size = new System.Drawing.Size(100, 20);
+            this.txt_desde.TabIndex = 2;
+            this.txt_desde.TextChanged += new System.EventHandler(this.txt_desde_TextChanged_1);
             // 
             // label3
             // 
@@ -317,7 +312,7 @@
             this.btn_comenzar.Location = new System.Drawing.Point(1008, 701);
             this.btn_comenzar.Name = "btn_comenzar";
             this.btn_comenzar.Size = new System.Drawing.Size(167, 36);
-            this.btn_comenzar.TabIndex = 14;
+            this.btn_comenzar.TabIndex = 3;
             this.btn_comenzar.Text = "Comenzar";
             this.btn_comenzar.UseVisualStyleBackColor = true;
             this.btn_comenzar.Click += new System.EventHandler(this.btn_comenzar_Click);
@@ -408,7 +403,7 @@
             // 
             // Column11
             // 
-            this.Column11.HeaderText = "Tiempo din de subida calecita";
+            this.Column11.HeaderText = "Tiempo fin de subida calecita";
             this.Column11.Name = "Column11";
             this.Column11.ReadOnly = true;
             this.Column11.Width = 80;
@@ -505,13 +500,12 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.btn_comenzar);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txt_desde);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.txt_desde);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.txt_simulaciones);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView1);
             this.Name = "Form1";
@@ -525,12 +519,11 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txt_desde;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txt_simulaciones;
+        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txt_desde;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label4;

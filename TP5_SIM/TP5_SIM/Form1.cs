@@ -36,10 +36,10 @@ namespace TP5_SIM
                 gestorDatos.CargarDatos(cantSimulaciones, desde);
                 gestorTabla = new GestorTabla(dataGridView1);
                 gestorTablaResultado = new GestorTabla(dataGridView2);
-                ////gestorTabla.CompletarTabla(desde - 1, hasta - 1, gestorDatos.GetDatos());
-                //gestorTabla.CompletarTabla(gestorDatos.GetDatos());
+                //gestorTabla.CompletarTabla(desde - 1, hasta - 1, gestorDatos.GetDatos());
+                gestorTabla.CompletarTabla(gestorDatos.GetDatos());
                 //gestorTablaResultado.CompletarTabla(gestorDatos.GetResultado());
-                //flag = false;
+                flag = false;
 
             }
             else
@@ -64,15 +64,15 @@ namespace TP5_SIM
 
         private void LeerTextBoxDesdeHasta()
         {
-            this.desde = int.Parse(this.txt_desde.Text);
+            this.desde = int.Parse(this.txt_simulaciones.Text);
         }
 
-        private void txt_simulaciones_TextChanged(object sender, EventArgs e)
+        private void txt_simulaciones_TextChanged_1(object sender, EventArgs e)
         {
             flag = true;
         }
 
-        private void txt_desde_TextChanged(object sender, EventArgs e)
+        private void txt_desde_TextChanged_1(object sender, EventArgs e)
         {
             flag = true;
         }
