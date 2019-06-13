@@ -333,10 +333,10 @@
             // 
             // Column3
             // 
-            this.Column3.HeaderText = "RND1";
+            this.Column3.HeaderText = "RND tiempo llegada familia";
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
-            this.Column3.Width = 62;
+            this.Column3.Width = 119;
             // 
             // Column4
             // 
@@ -354,10 +354,10 @@
             // 
             // Column6
             // 
-            this.Column6.HeaderText = "RND2";
+            this.Column6.HeaderText = "RND tiene fichas";
             this.Column6.Name = "Column6";
             this.Column6.ReadOnly = true;
-            this.Column6.Width = 62;
+            this.Column6.Width = 104;
             // 
             // Column12
             // 
@@ -368,10 +368,10 @@
             // 
             // Column13
             // 
-            this.Column13.HeaderText = "RND3";
+            this.Column13.HeaderText = "RND cantidad de niños";
             this.Column13.Name = "Column13";
             this.Column13.ReadOnly = true;
-            this.Column13.Width = 62;
+            this.Column13.Width = 108;
             // 
             // Column7
             // 
@@ -382,10 +382,10 @@
             // 
             // Column8
             // 
-            this.Column8.HeaderText = "RND4";
+            this.Column8.HeaderText = "RND fin de compra";
             this.Column8.Name = "Column8";
             this.Column8.ReadOnly = true;
-            this.Column8.Width = 62;
+            this.Column8.Width = 113;
             // 
             // Column9
             // 
@@ -399,35 +399,35 @@
             this.Column10.HeaderText = "Prox Fin de compra";
             this.Column10.Name = "Column10";
             this.Column10.ReadOnly = true;
-            this.Column10.Width = 68;
+            this.Column10.Width = 113;
             // 
             // Column11
             // 
             this.Column11.HeaderText = "Tiempo fin de subida calecita";
             this.Column11.Name = "Column11";
             this.Column11.ReadOnly = true;
-            this.Column11.Width = 80;
+            this.Column11.Width = 122;
             // 
             // Column14
             // 
             this.Column14.HeaderText = "Rompe en llanto (tiempo)";
             this.Column14.Name = "Column14";
             this.Column14.ReadOnly = true;
-            this.Column14.Width = 69;
+            this.Column14.Width = 103;
             // 
             // Column15
             // 
             this.Column15.HeaderText = "Rompe en llanto (Alta para llorar)";
             this.Column15.Name = "Column15";
             this.Column15.ReadOnly = true;
-            this.Column15.Width = 71;
+            this.Column15.Width = 124;
             // 
             // Column16
             // 
             this.Column16.HeaderText = "Rompe en llanto (proximo)";
             this.Column16.Name = "Column16";
             this.Column16.ReadOnly = true;
-            this.Column16.Width = 78;
+            this.Column16.Width = 103;
             // 
             // Column17
             // 
@@ -448,7 +448,7 @@
             this.Column19.HeaderText = "Calecita (Prox fin vuelta)";
             this.Column19.Name = "Column19";
             this.Column19.ReadOnly = true;
-            this.Column19.Width = 92;
+            this.Column19.Width = 105;
             // 
             // Column20
             // 
@@ -483,7 +483,7 @@
             this.Column24.HeaderText = "Cant fichas no compradas";
             this.Column24.Name = "Column24";
             this.Column24.ReadOnly = true;
-            this.Column24.Width = 95;
+            this.Column24.Width = 141;
             // 
             // Column25
             // 

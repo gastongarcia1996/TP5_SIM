@@ -140,9 +140,9 @@ namespace TP5_SIM
                     tiempoRompeEnLlanto = (evento == finDeSubidaCalecita) ? reloj : -1;
                     taParaLlorar = CalculoTaParaLlorar(evento, tiempoRompeEnLlanto, taParaLlorar, reloj, primeraVez);
                     proximoRompeEnLlanto = (tiempoRompeEnLlanto != -1) ? 4.5 + reloj : -1;
-                    estadoCalecita = CalculoEstadoCalecita(evento, colaCalecita, estadoCalecita);
+                    estadoCalecita = CalculoEstadoCalecita(evento, colaCalecita, estadoCalecita, reloj, proxVueltaCalecita);
                     colaCalecita = CalculoColaCalecita(evento, colaCalecita, cantNiños, estadoCalecita);
-                    proxVueltaCalecita = CalculoProxVueltaCalecita(evento, reloj, proxVueltaCalecita);
+                    proxVueltaCalecita = CalculoProxVueltaCalecita(evento, reloj, proxVueltaCalecita, estadoCalecita);
                     estadoBoleteria = CalculoEstadoBoleteria(evento, tieneFichas, estadoBoleteria, colaBoleteria);
                     colaBoleteria = AgregarFamiliaColaBoleteria(evento, estadoBoleteria, colaBoleteria, tieneFichas);
                     acuTiempoFuncionamiento += CalculoAcuTiempoFuncionamiento(evento);
@@ -174,13 +174,15 @@ namespace TP5_SIM
             return ret;
         }
 
-        private double CalculoEstadoCalecita(double evento, double colaCalecita, double estadoActual)
+        private double CalculoEstadoCalecita(double evento, double colaCalecita, double estadoActual, double reloj, double proxVueltaCalecita)
         {
             double ret = detenida;
 
-            if (colaCalecita == 0 || evento == finDeSubidaCalecita) ret = funcionando;
+            if ((colaCalecita == 0 && evento != finDeVueltaCalecita && evento != rompeEnLlanto) || evento == finDeSubidaCalecita) ret = funcionando;
 
-            if (estadoActual == funcionando && (evento != finDeVueltaCalecita || evento != rompeEnLlanto)) ret = funcionando;
+            if (estadoActual == funcionando && (evento != finDeVueltaCalecita && evento != rompeEnLlanto)) ret = funcionando;
+
+            if (proxVueltaCalecita != -1 && reloj >= proxVueltaCalecita) ret = detenida;
 
             return ret;
         }
@@ -226,7 +228,7 @@ namespace TP5_SIM
             {                
                 foreach (Niño n in listaNiños)
                 {
-                    acu += (n.GetTiempoSubida() != -1) ? n.GetTiempoSubida() : 0;
+                    acu += (n.GetEstado() == subiendo && n.GetTiempoSubida() != -1) ? n.GetTiempoSubida() : 0;
                 }
             }
             return reloj + acu;
@@ -337,9 +339,9 @@ namespace TP5_SIM
             return estadoBoleteriaOcupado;
         }
 
-        private double CalculoProxVueltaCalecita(double evento, double reloj, double proximaVuelta)
+        private double CalculoProxVueltaCalecita(double evento, double reloj, double proxVueltaCalecitaActual, double estadoCalecita)
         {
-            double auxiliar = 0.0;
+            double auxiliar = -1;
 
             if (evento == this.finDeSubidaCalecita)
             {
@@ -347,23 +349,35 @@ namespace TP5_SIM
             }
             else if (evento == rompeEnLlanto)
             {
-                auxiliar = proximaVuelta + 0.3;
+                auxiliar = proxVueltaCalecitaActual + 0.3;
             }
-            else auxiliar = -1;
-
+            else if (evento == finDeVueltaCalecita)
+            {
+                auxiliar = -1;
+            }
+            else if (estadoCalecita == funcionando && proxVueltaCalecitaActual != -1)
+            {
+                auxiliar = proxVueltaCalecitaActual;
+            }
 
             return auxiliar;
         }
 
         private double CalculoColaCalecita(double evento, double colaCalecitaActual, double cantNiños, double estadoCalecita)
         {
-            if (estadoCalecita == this.detenida)
+            double retorno = -1;
+            if (estadoCalecita == this.detenida && cantNiños != -1)
             {
-                return colaCalecitaActual + cantNiños;
+                retorno = colaCalecitaActual + cantNiños;
             }
 
-            if (evento == finDeSubidaCalecita) return 0;
-            return colaCalecitaActual;
+            if (evento == finDeSubidaCalecita && (colaCalecitaActual + cantNiños) >= 15)
+            {
+                retorno = colaCalecitaActual - 15;
+            }
+            else retorno = 0;
+
+            return retorno;
         }
         private double CalcularTiempoFinDeCompra(int a, int b, double rnd)
         {
