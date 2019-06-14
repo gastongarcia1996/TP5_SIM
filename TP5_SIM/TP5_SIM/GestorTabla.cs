@@ -16,6 +16,18 @@ namespace TP5_SIM
             this.tabla = tabla;
         }
 
+        public void CompletarTabla2(object[] datos)
+        {
+            tabla.Rows.Clear();
+
+            int fila = 0;
+            for (uint i = 0; i < datos.GetLength(0); i++)
+            {
+                tabla.Rows[fila].Cells[0].Value = StringEvento(datos[i, 0]);
+                tabla.Rows[fila].Cells[1].Value = CadenaAuxiliarTabla(datos[i, 1]);
+                tabla.Rows[fila].Cells[2].Value = CadenaAuxiliarTabla(datos[i, 2]);
+            }
+        }
         public void CompletarTabla(double[,] datos)
         {
             tabla.Rows.Clear();
@@ -46,7 +58,7 @@ namespace TP5_SIM
                 tabla.Rows[fila].Cells[17].Value = CadenaAuxiliarTabla(datos[i, 17]);
                 tabla.Rows[fila].Cells[18].Value = CadenaAuxiliarTabla(datos[i, 18]);
                 tabla.Rows[fila].Cells[19].Value = StringEstadoBoleteria(datos[i, 19]);
-                tabla.Rows[fila].Cells[20].Value = CadenaAuxiliarTabla(datos[i, 20]);
+                tabla.Rows[fila].Cells[20].Value = StringColaBoleteria(datos[i, 20]);
                 tabla.Rows[fila].Cells[21].Value = CadenaAuxiliarTabla(datos[i, 21]);
                 tabla.Rows[fila].Cells[22].Value = CadenaAuxiliarTabla(datos[i, 22]);
                 tabla.Rows[fila].Cells[23].Value = CadenaAuxiliarTabla(datos[i, 23]);
@@ -54,6 +66,13 @@ namespace TP5_SIM
 
                 fila++;
             }
+        }
+
+        private string StringColaBoleteria(double colaBoleteria)
+        {
+            if (colaBoleteria == -1) return "0";
+
+            return colaBoleteria.ToString();
         }
 
         private string StringEstadoBoleteria(double estadoBoleteria)

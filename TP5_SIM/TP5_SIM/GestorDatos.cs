@@ -32,6 +32,7 @@ namespace TP5_SIM
         private double acumuladorTiempoSubida = 0;
 
         private double[,] matrizDatos;
+        private object[] lugaresCalecita = new object[16];
         private Random random = new Random();
         bool primerIteracion;
         public GestorDatos()
@@ -68,7 +69,7 @@ namespace TP5_SIM
             double colaCalecita = 8;
             double proxVueltaCalecita = -1;
             double estadoBoleteria = this.estadoBoleteriaLibre;
-            double colaBoleteria = 0;
+            double colaBoleteria = -1;
             double acuTiempoFuncionamiento = 0;
             double lugaresVacios = 0;
             double cantidadFichasNoCompradas = 0;
@@ -116,7 +117,7 @@ namespace TP5_SIM
                     datos[cont, 22] = lugaresVacios;
                     datos[cont, 23] = cantidadFichasNoCompradas;
                     datos[cont, 24] = cantidadFichasCompradas;
-                    GestorNiño(evento, tieneFichas, estadoCalecita, colaCalecita, listaAuxiliarNiños, cantNiños);
+                    GestorNiño(evento, tieneFichas, estadoCalecita, colaCalecita, listaAuxiliarNiños, cantNiños, lugaresCalecita);
 
                     cont++;
                 }
@@ -132,16 +133,16 @@ namespace TP5_SIM
                     rndTieneFichas = (evento == llegadaFamilia) ? GenerarRandom() : -1;
                     tieneFichas = (rndTieneFichas != -1) ? TieneFichas(rndTieneFichas) : -1;
                     rndCantNiños = (evento == llegadaFamilia) ? GenerarRandom() : -1;
-                    cantNiños = (rndCantNiños != -1) ? CalcularCantNiños(1, 5, rndCantNiños) : -1; 
-                    rndFinDeCompra = (tieneFichas == noTieneFicha) ? GenerarRandom() : -1;
+                    cantNiños = (rndCantNiños != -1) ? CalcularCantNiños(1, 5, rndCantNiños) : -1;
+                    rndFinDeCompra = DispararRndFinDeCompra(evento, tieneFichas, estadoBoleteria, colaBoleteria);
                     tiempoFinDeCompra = (rndFinDeCompra != -1) ? CalcularTiempoFinDeCompra(1, 2, rndFinDeCompra) : -1;
                     proxFinDeCompra = (tiempoFinDeCompra != -1) ? reloj + tiempoFinDeCompra : -1;
                     tiempoFinSubidaCal = (estadoCalecita == detenida && evento != finDeSubidaCalecita) ? CalcularTiempoFinSubidaCalecita(listaAuxiliarNiños, reloj) : -1;
                     tiempoRompeEnLlanto = (evento == finDeSubidaCalecita) ? reloj : -1;
                     taParaLlorar = CalculoTaParaLlorar(evento, tiempoRompeEnLlanto, taParaLlorar, reloj, primeraVez);
-                    proximoRompeEnLlanto = (tiempoRompeEnLlanto != -1) ? 4.5 + reloj : -1;
+                    proximoRompeEnLlanto = CalculoProxRompeEnLlanto(evento, reloj, proximoRompeEnLlanto, taParaLlorar);
                     estadoCalecita = CalculoEstadoCalecita(evento, colaCalecita, estadoCalecita, reloj, proxVueltaCalecita);
-                    colaCalecita = CalculoColaCalecita(evento, colaCalecita, cantNiños, estadoCalecita);
+                    colaCalecita = CalculoColaCalecita(evento, colaCalecita, cantNiños, estadoCalecita, tieneFichas);
                     proxVueltaCalecita = CalculoProxVueltaCalecita(evento, reloj, proxVueltaCalecita, estadoCalecita);
                     estadoBoleteria = CalculoEstadoBoleteria(evento, tieneFichas, estadoBoleteria, colaBoleteria);
                     colaBoleteria = AgregarFamiliaColaBoleteria(evento, estadoBoleteria, colaBoleteria, tieneFichas);
@@ -150,35 +151,51 @@ namespace TP5_SIM
                     cantidadFichasNoCompradas = (evento == llegadaFamilia && tieneFichas == siTieneFicha) ? cantidadFichasNoCompradas += cantNiños : cantidadFichasNoCompradas;
                     cantidadFichasCompradas = (evento == llegadaFamilia && tieneFichas == noTieneFicha) ? cantidadFichasCompradas += cantNiños : cantidadFichasCompradas;
 
-                    GestorNiño(evento, tieneFichas, estadoCalecita, colaCalecita, listaAuxiliarNiños, cantNiños);
+                    GestorNiño(evento, tieneFichas, estadoCalecita, colaCalecita, listaAuxiliarNiños, cantNiños, lugaresCalecita);
                 }
             }
 
             this.matrizDatos = datos;
         }
        
-        private double CalculoProxRompeEnLlanto(double evento, double reloj, double estadoCalecita, bool primeraVezRompeEnLlanto, double proxRompeEnLlantoActual)
+        private double CalculoProxRompeEnLlanto(double evento, double reloj, double proximoRompeEnLlantoActual, double taParaLlorar)
         {
-            double ret = -1;
-
-            if (estadoCalecita == funcionando && primeraVezRompeEnLlanto == true)
+            double ret = proximoRompeEnLlantoActual;
+            if (evento == finDeSubidaCalecita && proximoRompeEnLlantoActual == -1)
             {
-                ret = reloj + 4.5;
-                primeraVezRompeEnLlanto = false;
+                if (taParaLlorar == 4.5) ret = reloj + 4.5;
+                else ret = reloj + 0.5;
             }
-            else if (estadoCalecita == funcionando && evento != finDeVueltaCalecita) ret = proxRompeEnLlantoActual;
-            else if (estadoCalecita == detenida && primeraVezRompeEnLlanto == false) ret = -1;
-            else if (evento == rompeEnLlanto && primeraVezRompeEnLlanto == false) ret = reloj + 4.5;
-            
+
+            if (proximoRompeEnLlantoActual != -1 && evento != finDeVueltaCalecita) ret = proximoRompeEnLlantoActual;
+
+            if (evento == finDeVueltaCalecita) ret = -1;
 
             return ret;
+        }
+
+        private double DispararRndFinDeCompra(double evento, double tieneFicha, double estadoBoleteria, double colaBoleteria)
+        {
+            double rnd = -1;
+            if (evento == llegadaFamilia && tieneFicha == noTieneFicha && estadoBoleteria == estadoBoleteriaLibre)
+            {
+                rnd = GenerarRandom();
+            }
+
+            if (evento == finDeCompra && colaBoleteria == -1)
+            {
+                rnd = GenerarRandom();
+            }
+
+            return rnd;
         }
 
         private double CalculoEstadoCalecita(double evento, double colaCalecita, double estadoActual, double reloj, double proxVueltaCalecita)
         {
             double ret = detenida;
 
-            if ((colaCalecita == 0 && evento != finDeVueltaCalecita && evento != rompeEnLlanto) || evento == finDeSubidaCalecita) ret = funcionando;
+
+            if ((estadoActual == detenida && colaCalecita == 0 && evento != finDeVueltaCalecita && evento != rompeEnLlanto) || evento == finDeSubidaCalecita) ret = funcionando;
 
             if (estadoActual == funcionando && (evento != finDeVueltaCalecita && evento != rompeEnLlanto)) ret = funcionando;
 
@@ -233,8 +250,9 @@ namespace TP5_SIM
             }
             return reloj + acu;
         }
-        private void GestorNiño(double evento, double tieneFicha, double estadoCalecita, double colaCalecita, LinkedList<Niño> lista, double cantidadNiñosLlegan)
+        private void GestorNiño(double evento, double tieneFicha, double estadoCalecita, double colaCalecita, LinkedList<Niño> lista, double cantidadNiñosLlegan, object[] lugaresCalecita)
         {
+            int i = 0;
             double rnd = GenerarRandom();
             if (evento == eventoInicial)
             {
@@ -265,6 +283,8 @@ namespace TP5_SIM
                     n.setEstado(enCalecita);
                     n.setRnd(-1);
                     n.setTiempoSubida(-1);
+                    lugaresCalecita[i] = n;
+                    i++;
                 }
             }
             //if (evento == finDeVueltaCalecita)
@@ -288,19 +308,16 @@ namespace TP5_SIM
         private double CalculoTaParaLlorar(double evento, double tiempoRompeEnLlanto, double taParaLlorarActual, double reloj, bool primeraVez)
         {
             double ret = -1;
-            if (tiempoRompeEnLlanto != -1 && primeraVez == true)
-            {
-                primeraVez = false;
-                return 4.5;               
-            }
 
-            if (evento != finDeVueltaCalecita)
-            {
-                ret = 4.5;
-            }
-            else ret = taParaLlorarActual - 4.0;
+            if (taParaLlorarActual == -1) ret = -1;
+
+            if ((evento == finDeSubidaCalecita || taParaLlorarActual != -1) && evento != finDeVueltaCalecita) ret = 4.5;
+
+            if (evento == finDeVueltaCalecita) ret = taParaLlorarActual - 4.0;
+
+            if (taParaLlorarActual == 0.5) ret = 0.5;
+
             if (evento == rompeEnLlanto) ret = 4.5;
- 
             
             return ret;
         }
@@ -318,25 +335,30 @@ namespace TP5_SIM
         }
 
         private double AgregarFamiliaColaBoleteria(double eventoActual, double estadoBoleteriaActual, double colaBoleteria, double tieneFicha)
-        {
-            if (estadoBoleteriaActual == estadoBoleteriaOcupado && eventoActual == llegadaFamilia && tieneFicha == noTieneFicha)
+        {          
+            if (colaBoleteria == -1 && eventoActual == llegadaFamilia && tieneFicha == noTieneFicha) return 0;
+
+            if (colaBoleteria > -1 && eventoActual == llegadaFamilia && tieneFicha == noTieneFicha)
             {
                 return colaBoleteria + 1;
             }
-            else if (eventoActual == finDeCompra) return colaBoleteria - 1;
+            if (eventoActual == finDeCompra) return colaBoleteria - 1;
+            if (eventoActual == finDeCompra && colaBoleteria == 0) return -1;
+
 
             return colaBoleteria;
         }
 
         private double CalculoEstadoBoleteria(double evento, double tieneFicha, double estadoBoleteriaActual, double colaBoleteria)
         {
-            if (evento == this.llegadaFamilia && tieneFicha == siTieneFicha && estadoBoleteriaActual == estadoBoleteriaLibre)
-            {
-                return estadoBoleteriaOcupado;
-            }
+
+            if (evento == llegadaFamilia && tieneFicha == noTieneFicha && colaBoleteria == -1) return estadoBoleteriaOcupado;
+
+            if (evento == llegadaFamilia && tieneFicha == noTieneFicha && colaBoleteria > -1) return estadoBoleteriaOcupado;
+
             if (estadoBoleteriaActual == estadoBoleteriaOcupado && evento == finDeCompra && colaBoleteria == 0) return estadoBoleteriaLibre;
 
-            return estadoBoleteriaOcupado;
+            return estadoBoleteriaActual;            
         }
 
         private double CalculoProxVueltaCalecita(double evento, double reloj, double proxVueltaCalecitaActual, double estadoCalecita)
@@ -358,24 +380,26 @@ namespace TP5_SIM
             else if (estadoCalecita == funcionando && proxVueltaCalecitaActual != -1)
             {
                 auxiliar = proxVueltaCalecitaActual;
-            }
+            }          
 
             return auxiliar;
         }
 
-        private double CalculoColaCalecita(double evento, double colaCalecitaActual, double cantNiños, double estadoCalecita)
+        private double CalculoColaCalecita(double evento, double colaCalecitaActual, double cantNiños, double estadoCalecita, double tieneFicha)
         {
-            double retorno = -1;
-            if (estadoCalecita == this.detenida && cantNiños != -1)
+            double retorno = colaCalecitaActual + cantNiños;
+
+            if ((evento == llegadaFamilia && tieneFicha == siTieneFicha) || evento == finDeCompra)
             {
                 retorno = colaCalecitaActual + cantNiños;
             }
+            else retorno = colaCalecitaActual;
 
-            if (evento == finDeSubidaCalecita && (colaCalecitaActual + cantNiños) >= 15)
+            if (evento == finDeSubidaCalecita)
             {
-                retorno = colaCalecitaActual - 15;
+                if ((colaCalecitaActual + cantNiños) >= 15) retorno = colaCalecitaActual - 15;
+                else retorno = 0;
             }
-            else retorno = 0;
 
             return retorno;
         }
@@ -412,6 +436,11 @@ namespace TP5_SIM
         public double[,] GetDatos()
         {
             return matrizDatos;
+        }
+
+        public object[] GetLugaresCalecita()
+        {
+            return lugaresCalecita;
         }
     }
 }
