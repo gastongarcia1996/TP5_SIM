@@ -17,6 +17,7 @@ namespace TP5_SIM
         private GestorDatos gestorDatos = null;
         private GestorTabla gestorTabla = null;
         private GestorTabla gestorTablaResultado = null;
+        private GestorTabla gestorTabla2 = null;
         private bool flag = false;
 
         public Form1()
@@ -35,9 +36,11 @@ namespace TP5_SIM
             {
                 gestorDatos.CargarDatos(cantSimulaciones, desde);
                 gestorTabla = new GestorTabla(dataGridView1);
-                gestorTablaResultado = new GestorTabla(dataGridView2);
+                //gestorTabla2 = new GestorTabla(dataGridView2);
+                //gestorTablaResultado = new GestorTabla(dataGridView2);
                 //gestorTabla.CompletarTabla(desde - 1, hasta - 1, gestorDatos.GetDatos());
                 gestorTabla.CompletarTabla(gestorDatos.GetDatos());
+                //gestorTabla2.CompletarTabla2(gestorDatos.GetLugaresCalecita());
                 //gestorTablaResultado.CompletarTabla(gestorDatos.GetResultado());
                 flag = false;
 

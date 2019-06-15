@@ -28,10 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txt_simulaciones = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.txt_desde = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.btn_comenzar = new System.Windows.Forms.Button();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.Column26 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column27 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column28 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,16 +72,6 @@
             this.Column23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column25 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txt_desde = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.btn_comenzar = new System.Windows.Forms.Button();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.Column26 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column27 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column28 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -141,181 +146,6 @@
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(1163, 377);
             this.dataGridView1.TabIndex = 9;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Evento";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 66;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Reloj";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Width = 56;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "RND tiempo llegada familia";
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.Width = 119;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Tiempo";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.Width = 67;
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "Proxima llegada";
-            this.Column5.Name = "Column5";
-            this.Column5.ReadOnly = true;
-            this.Column5.Width = 97;
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "RND tiene fichas";
-            this.Column6.Name = "Column6";
-            this.Column6.ReadOnly = true;
-            this.Column6.Width = 104;
-            // 
-            // Column12
-            // 
-            this.Column12.HeaderText = "Tiene fichas";
-            this.Column12.Name = "Column12";
-            this.Column12.ReadOnly = true;
-            this.Column12.Width = 83;
-            // 
-            // Column13
-            // 
-            this.Column13.HeaderText = "RND cantidad de niños";
-            this.Column13.Name = "Column13";
-            this.Column13.ReadOnly = true;
-            this.Column13.Width = 108;
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "Cantidad de niños";
-            this.Column7.Name = "Column7";
-            this.Column7.ReadOnly = true;
-            this.Column7.Width = 85;
-            // 
-            // Column8
-            // 
-            this.Column8.HeaderText = "RND fin de compra";
-            this.Column8.Name = "Column8";
-            this.Column8.ReadOnly = true;
-            this.Column8.Width = 113;
-            // 
-            // Column9
-            // 
-            this.Column9.HeaderText = "Tiempo";
-            this.Column9.Name = "Column9";
-            this.Column9.ReadOnly = true;
-            this.Column9.Width = 67;
-            // 
-            // Column10
-            // 
-            this.Column10.HeaderText = "Prox Fin de compra";
-            this.Column10.Name = "Column10";
-            this.Column10.ReadOnly = true;
-            this.Column10.Width = 113;
-            // 
-            // Column11
-            // 
-            this.Column11.HeaderText = "Tiempo fin de subida calecita";
-            this.Column11.Name = "Column11";
-            this.Column11.ReadOnly = true;
-            this.Column11.Width = 122;
-            // 
-            // Column14
-            // 
-            this.Column14.HeaderText = "Rompe en llanto (tiempo)";
-            this.Column14.Name = "Column14";
-            this.Column14.ReadOnly = true;
-            this.Column14.Width = 103;
-            // 
-            // Column15
-            // 
-            this.Column15.HeaderText = "Rompe en llanto (Alta para llorar)";
-            this.Column15.Name = "Column15";
-            this.Column15.ReadOnly = true;
-            this.Column15.Width = 124;
-            // 
-            // Column16
-            // 
-            this.Column16.HeaderText = "Rompe en llanto (proximo)";
-            this.Column16.Name = "Column16";
-            this.Column16.ReadOnly = true;
-            this.Column16.Width = 103;
-            // 
-            // Column17
-            // 
-            this.Column17.HeaderText = "Calecita (Estado)";
-            this.Column17.Name = "Column17";
-            this.Column17.ReadOnly = true;
-            this.Column17.Width = 103;
-            // 
-            // Column18
-            // 
-            this.Column18.HeaderText = "Calecita (Cola)";
-            this.Column18.Name = "Column18";
-            this.Column18.ReadOnly = true;
-            this.Column18.Width = 92;
-            // 
-            // Column19
-            // 
-            this.Column19.HeaderText = "Calecita (Prox fin vuelta)";
-            this.Column19.Name = "Column19";
-            this.Column19.ReadOnly = true;
-            this.Column19.Width = 105;
-            // 
-            // Column20
-            // 
-            this.Column20.HeaderText = "Boletería (Estado)";
-            this.Column20.Name = "Column20";
-            this.Column20.ReadOnly = true;
-            this.Column20.Width = 107;
-            // 
-            // Column21
-            // 
-            this.Column21.HeaderText = "Boletería (Cola)";
-            this.Column21.Name = "Column21";
-            this.Column21.ReadOnly = true;
-            this.Column21.Width = 96;
-            // 
-            // Column22
-            // 
-            this.Column22.HeaderText = "Acu. Tiempo funcionamiento";
-            this.Column22.Name = "Column22";
-            this.Column22.ReadOnly = true;
-            this.Column22.Width = 152;
-            // 
-            // Column23
-            // 
-            this.Column23.HeaderText = "Lugares Vacíos";
-            this.Column23.Name = "Column23";
-            this.Column23.ReadOnly = true;
-            this.Column23.Width = 98;
-            // 
-            // Column24
-            // 
-            this.Column24.HeaderText = "Cant fichas no compradas";
-            this.Column24.Name = "Column24";
-            this.Column24.ReadOnly = true;
-            this.Column24.Width = 141;
-            // 
-            // Column25
-            // 
-            this.Column25.HeaderText = "Cant fichas compradas";
-            this.Column25.Name = "Column25";
-            this.Column25.ReadOnly = true;
-            this.Column25.Width = 128;
             // 
             // txt_desde
             // 
@@ -413,6 +243,191 @@
             this.Column28.Name = "Column28";
             this.Column28.ReadOnly = true;
             // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Evento";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 66;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Reloj";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 56;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "RND tiempo llegada familia";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Width = 119;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Tiempo";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Width = 67;
+            // 
+            // Column5
+            // 
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Lime;
+            this.Column5.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Column5.HeaderText = "Proxima llegada";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            this.Column5.Width = 97;
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "RND tiene fichas";
+            this.Column6.Name = "Column6";
+            this.Column6.ReadOnly = true;
+            this.Column6.Width = 104;
+            // 
+            // Column12
+            // 
+            this.Column12.HeaderText = "Tiene fichas";
+            this.Column12.Name = "Column12";
+            this.Column12.ReadOnly = true;
+            this.Column12.Width = 83;
+            // 
+            // Column13
+            // 
+            this.Column13.HeaderText = "RND cantidad de niños";
+            this.Column13.Name = "Column13";
+            this.Column13.ReadOnly = true;
+            this.Column13.Width = 108;
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "Cantidad de niños";
+            this.Column7.Name = "Column7";
+            this.Column7.ReadOnly = true;
+            this.Column7.Width = 85;
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "RND fin de compra";
+            this.Column8.Name = "Column8";
+            this.Column8.ReadOnly = true;
+            this.Column8.Width = 113;
+            // 
+            // Column9
+            // 
+            this.Column9.HeaderText = "Tiempo";
+            this.Column9.Name = "Column9";
+            this.Column9.ReadOnly = true;
+            this.Column9.Width = 67;
+            // 
+            // Column10
+            // 
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Lime;
+            this.Column10.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Column10.HeaderText = "Prox Fin de compra";
+            this.Column10.Name = "Column10";
+            this.Column10.ReadOnly = true;
+            this.Column10.Width = 113;
+            // 
+            // Column11
+            // 
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Lime;
+            this.Column11.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Column11.HeaderText = "Tiempo fin de subida calecita";
+            this.Column11.Name = "Column11";
+            this.Column11.ReadOnly = true;
+            this.Column11.Width = 122;
+            // 
+            // Column14
+            // 
+            this.Column14.HeaderText = "Rompe en llanto (tiempo)";
+            this.Column14.Name = "Column14";
+            this.Column14.ReadOnly = true;
+            this.Column14.Width = 103;
+            // 
+            // Column15
+            // 
+            this.Column15.HeaderText = "Rompe en llanto (Alta para llorar)";
+            this.Column15.Name = "Column15";
+            this.Column15.ReadOnly = true;
+            this.Column15.Width = 124;
+            // 
+            // Column16
+            // 
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Lime;
+            this.Column16.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Column16.HeaderText = "Rompe en llanto (proximo)";
+            this.Column16.Name = "Column16";
+            this.Column16.ReadOnly = true;
+            this.Column16.Width = 103;
+            // 
+            // Column17
+            // 
+            this.Column17.HeaderText = "Calecita (Estado)";
+            this.Column17.Name = "Column17";
+            this.Column17.ReadOnly = true;
+            this.Column17.Width = 103;
+            // 
+            // Column18
+            // 
+            this.Column18.HeaderText = "Calecita (Cola)";
+            this.Column18.Name = "Column18";
+            this.Column18.ReadOnly = true;
+            this.Column18.Width = 92;
+            // 
+            // Column19
+            // 
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Lime;
+            this.Column19.DefaultCellStyle = dataGridViewCellStyle5;
+            this.Column19.HeaderText = "Calecita (Prox fin vuelta)";
+            this.Column19.Name = "Column19";
+            this.Column19.ReadOnly = true;
+            this.Column19.Width = 105;
+            // 
+            // Column20
+            // 
+            this.Column20.HeaderText = "Boletería (Estado)";
+            this.Column20.Name = "Column20";
+            this.Column20.ReadOnly = true;
+            this.Column20.Width = 107;
+            // 
+            // Column21
+            // 
+            this.Column21.HeaderText = "Boletería (Cola)";
+            this.Column21.Name = "Column21";
+            this.Column21.ReadOnly = true;
+            this.Column21.Width = 96;
+            // 
+            // Column22
+            // 
+            this.Column22.HeaderText = "Acu. Tiempo funcionamiento";
+            this.Column22.Name = "Column22";
+            this.Column22.ReadOnly = true;
+            this.Column22.Width = 152;
+            // 
+            // Column23
+            // 
+            this.Column23.HeaderText = "Lugares Vacíos";
+            this.Column23.Name = "Column23";
+            this.Column23.ReadOnly = true;
+            this.Column23.Width = 98;
+            // 
+            // Column24
+            // 
+            this.Column24.HeaderText = "Cant fichas no compradas";
+            this.Column24.Name = "Column24";
+            this.Column24.ReadOnly = true;
+            this.Column24.Width = 141;
+            // 
+            // Column25
+            // 
+            this.Column25.HeaderText = "Cant fichas compradas";
+            this.Column25.Name = "Column25";
+            this.Column25.ReadOnly = true;
+            this.Column25.Width = 128;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -450,6 +465,10 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btn_comenzar;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column26;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column27;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column28;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
@@ -475,10 +494,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column23;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column24;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column25;
-        private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column26;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column27;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column28;
     }
 }
 

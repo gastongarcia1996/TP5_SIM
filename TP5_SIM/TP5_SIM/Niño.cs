@@ -37,6 +37,11 @@ namespace TP5_SIM
         {
             return estado;
         }
+
+        public double GetRnd()
+        {
+            return rnd;
+        }
         public double GetTiempoSubida()
         {
             return tiempoSubida;

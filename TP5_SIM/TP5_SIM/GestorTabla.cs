@@ -16,16 +16,26 @@ namespace TP5_SIM
             this.tabla = tabla;
         }
 
-        public void CompletarTabla2(object[] datos)
+        public void CompletarTabla2(double[,] datos)
         {
             tabla.Rows.Clear();
 
             int fila = 0;
-            for (uint i = 0; i < datos.GetLength(0); i++)
+            for (int i = 0; i < datos.GetLength(0); i++)
             {
-                tabla.Rows[fila].Cells[0].Value = StringEvento(datos[i, 0]);
-                tabla.Rows[fila].Cells[1].Value = CadenaAuxiliarTabla(datos[i, 1]);
-                tabla.Rows[fila].Cells[2].Value = CadenaAuxiliarTabla(datos[i, 2]);
+                if (datos[i, 0] == -1)
+                {
+                    tabla.Rows[fila].Cells[0].Value = "-";
+                    tabla.Rows[fila].Cells[1].Value = "-";
+                    tabla.Rows[fila].Cells[2].Value = "-";
+                }
+                else
+                {
+                    tabla.Rows[fila].Cells[0].Value = datos[i, 0];
+                    tabla.Rows[fila].Cells[1].Value = datos[i, 1];
+                    tabla.Rows[fila].Cells[2].Value = datos[i, 2];
+                }
+                fila++;
             }
         }
         public void CompletarTabla(double[,] datos)
