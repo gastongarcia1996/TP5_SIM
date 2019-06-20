@@ -43,7 +43,7 @@ namespace TP5_SIM
 
         public void CargarDatos(int cantSimulaciones, int desde)
         {
-            int hasta = 0;
+            int hasta = 100;
             double[,] datos = new double[101, 26];
             LinkedList<Niño> listaAuxiliarNiños = new LinkedList<Niño>();
             GestorNiños gestorNiños = new GestorNiños(listaAuxiliarNiños);
@@ -77,7 +77,7 @@ namespace TP5_SIM
             double cantidadFichasCompradas = 0;
             
 
-            for (int j = 0; j < 7; j++)
+            for (int j = 0; j < 8; j++)
             {
                 listaAuxiliarNiños.AddFirst(new Niño(3, -1, -1));
             }           
@@ -140,7 +140,8 @@ namespace TP5_SIM
                     tiempoFinDeCompra = (rndFinDeCompra != -1) ? CalcularTiempoFinDeCompra(1, 2, rndFinDeCompra) : -1;
                     //proxFinDeCompra = (tiempoFinDeCompra != -1) ? reloj + tiempoFinDeCompra : -1;
                     proxFinDeCompra = CalculoProxFinDeCompra(evento, tieneFichas, reloj, tiempoFinDeCompra, colaBoleteria, proxFinDeCompra);
-                    tiempoFinSubidaCal = (estadoCalecita == detenida && evento != finDeSubidaCalecita) ? CalcularTiempoFinSubidaCalecita(listaAuxiliarNiños, reloj) : -1;
+                    //tiempoFinSubidaCal = (estadoCalecita == detenida && evento != finDeSubidaCalecita) ? CalcularTiempoFinSubidaCalecita(listaAuxiliarNiños, reloj) : -1;
+                    tiempoFinSubidaCal = CalculoTiempoFinDeSubidaCal(evento, tiempoFinSubidaCal, listaAuxiliarNiños, reloj, estadoCalecita, tieneFichas);
                     tiempoRompeEnLlanto = (evento == finDeSubidaCalecita) ? reloj : -1;
                     altaParaLlorar = CalculoTaParaLlorar(evento, tiempoRompeEnLlanto, altaParaLlorar, reloj, primeraVez);
                     proximoRompeEnLlanto = CalculoProxRompeEnLlanto(evento, reloj, proximoRompeEnLlanto, altaParaLlorar);
@@ -161,6 +162,27 @@ namespace TP5_SIM
             this.matrizDatos = datos;
         }
        
+        private double CalculoTiempoFinDeSubidaCal(double evento, double tiempoFinDeSibidaCalActual, LinkedList<Niño> lista, double reloj, double estadoCalecita, double tieneFicha)
+        {
+            double retorno = -1;
+
+            if ((evento != finDeSubidaCalecita && estadoCalecita == detenida) || evento == finDeVueltaCalecita)
+            {
+                retorno = CalcularTiempoFinSubidaCalecita(lista, reloj);
+            }
+
+            if (evento == rompeEnLlanto) retorno = -1;
+
+            if (evento == llegadaFamilia && tieneFicha == noTieneFicha) retorno = tiempoFinDeSibidaCalActual;
+
+            if (evento == finDeCompra)
+            {
+                lista.AddFirst(new Niño(2, -1, -1));
+                //retorno = CalcularTiempoFinSubidaCalecita(lista, reloj);
+            }
+            return retorno;
+        }
+
         private double CalculoProxFinDeCompra(double evento, double tieneFicha, double reloj, double tiempoFinDeCompra, double colaBoleteria, double proxFinDeCompraActual)
         {
             double retorno = -1;
@@ -316,6 +338,19 @@ namespace TP5_SIM
             }
             return reloj + acu;
         }
+        //private double CalcularTiempoFinSubidaCalecita(LinkedList<Niño> listaNiños, double reloj, double cantNiños)
+        //{
+        //    double acu = 0;
+        //    if (listaNiños.Count == 0) return acu;
+        //    else
+        //    {
+        //        for (int i = 0; i < cantNiños; i++)
+        //        {
+        //            acu += (n.GetEstado() == subiendo && n.GetTiempoSubida() != -1) ? n.GetTiempoSubida() : 0;
+        //        }
+        //    }
+        //    return reloj + acu;
+        //}
         private void GestorNiño(double evento, double tieneFicha, double estadoCalecita, double colaCalecita, LinkedList<Niño> lista, double cantidadNiñosLlegan, double[,] lugaresCalecita)
         {
             int i = 0;
@@ -338,23 +373,26 @@ namespace TP5_SIM
                 this.acumuladorTiempoSubida += tiempoSubida;
                 lista.AddFirst(new Niño(subiendo, rnd, tiempoSubida));
             }
-            if (evento == llegadaFamilia && tieneFicha == noTieneFicha)
-            {
-                lista.AddFirst(new Niño(enColaCompra, -1, -1));
-            }
+            //if (evento == llegadaFamilia && tieneFicha == noTieneFicha)
+            //{
+            //    lista.AddFirst(new Niño(enColaCompra, -1, -1));
+            //}
             if (evento == finDeSubidaCalecita)
             {
                 foreach (Niño n in lista)
                 {                 
                     if (colaCalecita <= 15)
                     {
-                        n.setEstado(enCalecita);
-                        n.setRnd(-1);
-                        n.setTiempoSubida(-1);
+                        if (n.GetEstado() == subiendo)
+                        {
+                            n.setEstado(enCalecita);
+                            n.setRnd(-1);
+                            n.setTiempoSubida(-1);
 
-                        lugaresCalecita[i, 0] = n.GetEstado();
-                        lugaresCalecita[i, 1] = n.GetRnd();
-                        lugaresCalecita[i, 2] = n.GetTiempoSubida();
+                            lugaresCalecita[i, 0] = n.GetEstado();
+                            lugaresCalecita[i, 1] = n.GetRnd();
+                            lugaresCalecita[i, 2] = n.GetTiempoSubida();
+                        }                      
                     }
                     i++;
                 }
@@ -366,6 +404,13 @@ namespace TP5_SIM
                     for (int k = 0; k < lugaresCalecita.GetLength(1); k++)
                     {
                         if (lugaresCalecita[j, k] == 1) lugaresCalecita[j, k] = -1;
+                    }
+                }
+                foreach (Niño n in lista)
+                {
+                    if (n.GetEstado() == enCalecita)
+                    {
+                        n.setEstado(-1);
                     }
                 }
             }
