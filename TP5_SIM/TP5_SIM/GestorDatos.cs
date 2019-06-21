@@ -35,22 +35,21 @@ namespace TP5_SIM
         private double[,] lugaresCalecita = new double[3, 15];
         private Random random = new Random();
         bool primerIteracion;
-        LinkedList<double> listaCantDeNiños = new LinkedList<double>();
+        LinkedList<double> listaCantDeNiños = new LinkedList<double>();       
+
         public GestorDatos()
         {
-            matrizDatos = new double[100, 25];
+            matrizDatos = new double[100, 26];
         }
 
         public void CargarDatos(int cantSimulaciones, int desde)
         {
-            int hasta = 100;
+            uint hasta = 100;
             double[,] datos = new double[101, 26];
             LinkedList<Niño> listaAuxiliarNiños = new LinkedList<Niño>();
-            GestorNiños gestorNiños = new GestorNiños(listaAuxiliarNiños);
-
+            GestorNiños gestorNiños = new GestorNiños(listaAuxiliarNiños);          
             bool primeraVez = true;
-            bool primeraVezProximoRompeEnLlanto = true;
-            double evento = eventoInicial;
+            double evento = -1;
             double reloj = 0.0;
             double rndTiempoLlegada = -1;
             double tiempoLlegada = -1;
@@ -66,24 +65,25 @@ namespace TP5_SIM
             double tiempoRompeEnLlanto = -1;
             double altaParaLlorar = -1;
             double proximoRompeEnLlanto = -1;
-            double estadoCalecita = 0.0; 
+            double estadoCalecita = 0.0;
             double colaCalecita = 8;
             double proxFinDeVueltaCalecita = -1;
-            double estadoBoleteria = this.estadoBoleteriaLibre;
+            double estadoBoleteria = 0;
             double colaBoleteria = -1;
             double acuTiempoFuncionamiento = 0;
             double lugaresVacios = 0;
             double cantidadFichasNoCompradas = 0;
             double cantidadFichasCompradas = 0;
-            
+            int cont = 0;
+            int nroExp = 1;
+
 
             for (int j = 0; j < 8; j++)
             {
                 listaAuxiliarNiños.AddFirst(new Niño(3, -1, -1));
             }           
 
-            int cont = 0;
-            int nroExp = 1;
+            
 
             for (int i = 1; i <= cantSimulaciones; i++)
             {
@@ -91,34 +91,35 @@ namespace TP5_SIM
                 {
                     if ((cantSimulaciones - desde) < 100)
                     {
-                        hasta = cantSimulaciones - desde;
+                        hasta = (uint)(cantSimulaciones - desde);
                     }
 
-                    datos[cont, 0] = evento;
-                    datos[cont, 1] = reloj;
-                    datos[cont, 2] = rndTiempoLlegada;
-                    datos[cont, 3] = tiempoLlegada;
-                    datos[cont, 4] = proxLlegada;
-                    datos[cont, 5] = rndTieneFichas;
-                    datos[cont, 6] = tieneFichas;
-                    datos[cont, 7] = rndCantNiños;
-                    datos[cont, 8] = cantNiños;
-                    datos[cont, 9] = rndFinDeCompra;
-                    datos[cont, 10] = tiempoFinDeCompra;
-                    datos[cont, 11] = proxFinDeCompra;
-                    datos[cont, 12] = tiempoFinSubidaCal;
-                    datos[cont, 13] = tiempoRompeEnLlanto;
-                    datos[cont, 14] = altaParaLlorar;
-                    datos[cont, 15] = proximoRompeEnLlanto;
-                    datos[cont, 16] = estadoCalecita;
-                    datos[cont, 17] = colaCalecita;
-                    datos[cont, 18] = proxFinDeVueltaCalecita;
-                    datos[cont, 19] = estadoBoleteria;
-                    datos[cont, 20] = colaBoleteria;
-                    datos[cont, 21] += acuTiempoFuncionamiento;
-                    datos[cont, 22] = lugaresVacios;
-                    datos[cont, 23] = cantidadFichasNoCompradas;
-                    datos[cont, 24] = cantidadFichasCompradas;
+                    datos[cont, 0] = nroExp;
+                    datos[cont, 1] = evento;
+                    datos[cont, 2] = reloj;
+                    datos[cont, 3] = rndTiempoLlegada;
+                    datos[cont, 4] = tiempoLlegada;
+                    datos[cont, 5] = proxLlegada;
+                    datos[cont, 6] = rndTieneFichas;
+                    datos[cont, 7] = tieneFichas;
+                    datos[cont, 8] = rndCantNiños;
+                    datos[cont, 9] = cantNiños;
+                    datos[cont, 10] = rndFinDeCompra;
+                    datos[cont, 11] = tiempoFinDeCompra;
+                    datos[cont, 12] = proxFinDeCompra;
+                    datos[cont, 13] = tiempoFinSubidaCal;
+                    datos[cont, 14] = tiempoRompeEnLlanto;
+                    datos[cont, 15] = altaParaLlorar;
+                    datos[cont, 16] = proximoRompeEnLlanto;
+                    datos[cont, 17] = estadoCalecita;
+                    datos[cont, 18] = colaCalecita;
+                    datos[cont, 19] = proxFinDeVueltaCalecita;
+                    datos[cont, 20] = estadoBoleteria;
+                    datos[cont, 21] = colaBoleteria;
+                    datos[cont, 22] += acuTiempoFuncionamiento;
+                    datos[cont, 23] = lugaresVacios;
+                    datos[cont, 24] = cantidadFichasNoCompradas;
+                    datos[cont, 25] = cantidadFichasCompradas;
                     GestorNiño(evento, tieneFichas, estadoCalecita, colaCalecita, listaAuxiliarNiños, cantNiños, lugaresCalecita);
 
                     cont++;
@@ -500,7 +501,8 @@ namespace TP5_SIM
             else if (estadoCalecita == funcionando && proxVueltaCalecitaActual != -1)
             {
                 auxiliar = proxVueltaCalecitaActual;
-            }          
+            }
+            else auxiliar = proxVueltaCalecitaActual;
 
             return auxiliar;
         }

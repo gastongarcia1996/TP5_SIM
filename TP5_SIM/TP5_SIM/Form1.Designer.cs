@@ -252,10 +252,11 @@
             // 
             // Column2
             // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.Column2.HeaderText = "Reloj";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
-            this.Column2.Width = 56;
+            this.Column2.Width = 76;
             // 
             // Column3
             // 

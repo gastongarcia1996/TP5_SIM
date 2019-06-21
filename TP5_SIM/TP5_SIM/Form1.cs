@@ -67,7 +67,7 @@ namespace TP5_SIM
 
         private void LeerTextBoxDesdeHasta()
         {
-            this.desde = int.Parse(this.txt_simulaciones.Text);
+            this.desde = int.Parse(this.txt_desde.Text);
         }
 
         private void txt_simulaciones_TextChanged_1(object sender, EventArgs e)
